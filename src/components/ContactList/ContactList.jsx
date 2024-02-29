@@ -5,7 +5,7 @@ import { BsFillTelephoneFill } from 'react-icons/bs';
 import { deleteContact } from '../../redux/operations';
 import { selectFilter } from '../../redux/selectors';
 
-export const ContactList = () => {
+export default function ContactList  () {
   const filter = useSelector(selectFilter);
 
   const dispatch = useDispatch();
@@ -34,4 +34,4 @@ export const ContactList = () => {
       ))}
     </ul>
   );
-};
+}

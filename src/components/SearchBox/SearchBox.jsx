@@ -3,7 +3,7 @@ import css from './SearchBox.module.css';
 import { useDispatch } from 'react-redux';
 import { filterContact } from '../../redux/filterSlice';
 
-export const SearchBox = () => {
+export default function SearchBox() {
   const dispatch = useDispatch();
 
   const filterId = useId();
@@ -17,4 +17,4 @@ export const SearchBox = () => {
       {/* <p>{filter}</p> */}
     </div>
   );
-};
+}
