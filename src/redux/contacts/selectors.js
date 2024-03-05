@@ -15,7 +15,7 @@ export const selectFilter = createSelector(
       includeScore: true,
       includeMatches: true,
       threshold: 0.3,
-      minMatchCharLength: 2,
+      minMatchCharLength: 1,
     };
 
     const fuse = new Fuse(arrayItems, options);

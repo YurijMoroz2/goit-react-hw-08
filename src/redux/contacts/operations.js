@@ -19,6 +19,7 @@ export const addContact = createAsyncThunk('contacts/addContact', async (contact
     return thunkAPI.rejectWithValue(error.message);
   }
 });
+
 export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
   async (contactId, thunkAPI) => {
