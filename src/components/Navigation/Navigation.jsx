@@ -1,28 +1,25 @@
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../../hooks';
 import css from './Navigation.module.css';
-import clsx from 'clsx';
+import { buildLinkClass } from '../constanta';
+import { UserMenu } from '../UserMenu/UserMenu';
+import { AuthNav } from '../AuthNav/AuthNav';
 
-const buildLinkClass = ({ isActive }) => {
-  return clsx(css.link, isActive && css.active);
-};
 export const Navigation = () => {
+  const { isLoggedIn } = useAuth();
   return (
     <header className={css.header}>
-
-    <nav className={css.nav}>
-      <NavLink to="/"  className={buildLinkClass}>
-        Home
-      </NavLink>
-      <NavLink to="/contacts" className={buildLinkClass}>
-        Contacts
-      </NavLink>
-      <NavLink to="/register" className={buildLinkClass}>
-        Register
-      </NavLink>
-      <NavLink to="/login" className={buildLinkClass}>
-        Login
-      </NavLink>
-    </nav>
+      <nav className={css.nav}>
+        <NavLink to="/" className={buildLinkClass}>
+          Home
+        </NavLink>
+        {isLoggedIn && (
+          <NavLink className={buildLinkClass} to="/contacts">
+            Contacts
+          </NavLink>
+        )}
+      </nav>
+      {isLoggedIn ? <UserMenu /> : <AuthNav className={buildLinkClass} />}
     </header>
   );
 };

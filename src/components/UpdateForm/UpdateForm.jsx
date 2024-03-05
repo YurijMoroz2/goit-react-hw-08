@@ -1,9 +1,9 @@
 import { useId } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import css from './ContactForm.module.css';
+import css from './UpdateForm.module.css';
 import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contacts/operations';
+import { updateContact } from '../../redux/contacts/operations';
 import { notify, notifyError } from '../constanta';
 
 const feedbackSchema = Yup.object().shape({
@@ -14,7 +14,7 @@ const feedbackSchema = Yup.object().shape({
     .required('Required'),
 });
 
-export default function ContactForm() {
+export default function UpdateForm({ item: { id, name, number }, closeModal }) {
   const dispatch = useDispatch();
 
   const onSubmitFormik = ({ name, number }, actions) => {
@@ -23,7 +23,7 @@ export default function ContactForm() {
       name: name,
       number: number.replace(/(\d{3})(\d{3})(\d{2})/, '$1-$2-$3'),
     };
-    dispatch(addContact(contactData))
+    dispatch(updateContact({ id: id, data: contactData }))
       .unwrap()
       .then(() => {
         notify();
@@ -31,6 +31,7 @@ export default function ContactForm() {
       .catch(() => {
         notifyError();
       });
+    closeModal();
   };
 
   const nameId = useId(5);
@@ -38,7 +39,7 @@ export default function ContactForm() {
 
   return (
     <Formik
-      initialValues={{ name: '', number: '' }}
+      initialValues={{ name: name, number: number }}
       onSubmit={onSubmitFormik}
       validationSchema={feedbackSchema}
     >
@@ -53,7 +54,7 @@ export default function ContactForm() {
           <Field type="tel" name="number" id={numberId} />
           <ErrorMessage name="number" component="span" className={css.span} />
         </div>
-        <button type="submit">Add contact</button>
+        <button type="submit">Update</button>
       </Form>
     </Formik>
   );

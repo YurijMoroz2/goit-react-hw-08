@@ -1,0 +1,22 @@
+.Modal {
+    /* height: 320px; */
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    inset: 40px;
+    border: 1px solid rgb(204, 204, 204);
+  
+    overflow: auto;
+    border-radius: 4px;
+    outline: none;
+    padding: 20px;
+  
+    background-color: papayawhip;
+  }
+  @media (min-width: 768px) {
+    .Modal {
+      margin: 50px 100px;
+    }
+   
+  }

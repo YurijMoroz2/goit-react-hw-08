@@ -16,8 +16,8 @@ const styles = {
     return (
       <div style={styles.container}>
         <h1 style={styles.title}>
-          Task manager welcome page{' '}
-          <span role="img" aria-label="Greeting icon">
+        Welcome page of the phone book
+          <span  role="img" aria-label="Greeting icon" style={{ fontSize: '60px' }}>
             💁‍♀️
           </span>
         </h1>

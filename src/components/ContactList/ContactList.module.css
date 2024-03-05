@@ -38,9 +38,15 @@
   .contactBoxContact{
     display: flex;
     justify-content: space-between;
+
+
+}
+.boxItem:hover {
+color:darkcyan;
 }
 .contactBoxName{
     text-align: start;
+    
 }
 .contactBoxNumber{
     composes:contactBoxName;
@@ -49,4 +55,40 @@
     margin: auto 0;
     width: 83px;
     height: 41px;
+}
+/* ----------------------------------- */
+
+.btnModal{
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  width: 100%;
+  height: 50px;
+
+}
+.btnModalCan{
+  color: aqua;
+}
+.btnModalDel{
+color: red;
+}
+.contactBoxNameDel{
+  text-align: center;
+color: black;
+font-size: 25px;
+}
+.contactBoxNumberDel{
+  text-align: center;
+  font-size: 30px;
+  color: #000;
+}
+.text{
+  color: red;
+}
+/* ------------------------------- */
+.contactBoxNameUp{
+color: black;
+}
+.contactBoxNumberUp{
+  color: black;
 }

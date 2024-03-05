@@ -1,0 +1,16 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .username {
+    font-weight: 700;
+  }
+  .wrapper button{
+    color: brown;
+  }
+  .username span{
+    color: brown;
+    font-size: 30px;
+  }

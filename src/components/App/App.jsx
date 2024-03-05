@@ -1,60 +1,50 @@
 import './App.css';
-// import reactLogo from '../../assets/react.svg';
-// import ContactForm from '../ContactForm/ContactForm';
-// import { SearchBox } from '../SearchBox/SearchBox';
-// import { ContactList } from '../ContactList/ContactList';
-// import { fetchContacts } from '../../redux/operations';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { Suspense, useEffect } from 'react';
-// import { selectStateContacts } from '../../redux/selectors';
-import { Navigation } from '../Navigation/Navigation';
 import { Route, Routes } from 'react-router-dom';
-import Home from '../../pages/Home';
-// import Contacts from '../../pages/Contacts';
-import Register from '../../pages/Register';
-import Login from '../../pages/Login';
-import Contacts from '../../pages/Contacts';
 
-function App() {
-  // const dispatch = useDispatch();
-  // const { items, loading, error } = useSelector(selectStateContacts);
+import { useDispatch } from 'react-redux';
+import { lazy, useEffect } from 'react';
+import { useAuth } from '../../hooks';
+import { refreshUser } from '../../redux/auth/operations';
+import { RestrictedRoute } from '../RestrictedRoute';
+import { PrivateRoute } from '../PrivateRoute';
+import { Layout } from '../Layout';
 
-  // useEffect(() => {
-  //   dispatch(fetchContacts());
-  // }, [dispatch]);
+const HomePage = lazy(() => import('../../pages/Home'));
+const RegisterPage = lazy(() => import('../../pages/Register'));
+const LoginPage = lazy(() => import('../../pages/Login'));
+const ContactsPage = lazy(() => import('../../pages/Contacts'));
 
-  return (
-    <div>
-      <Navigation />
-      {/* <Suspense fallback={<b>Loading...</b>}> */}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/contacts" element={<Contacts />} />
-          <Route path="/register" element={<Register />} />
-         
-          <Route path="/login" element={<Login />} />
-         
-          {/* <Route path="/movie/:movieId" element={<MovieDetailsPage />}>
-            <Route path="cast" element={<MovieCast />} />
-            <Route path="reviews" element={<MovieReviews />} />
-          </Route> */}
+export const App = () => {
+  const dispatch = useDispatch();
+  const { isRefreshing } = useAuth();
 
-          {/* <Route path="*" element={<NotFound />} /> */}
-        </Routes>
-      {/* </Suspense> */}
-    </div>
-    // <div>
-    //   <img src={reactLogo} className="logo react" alt="React logo" />
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
 
-    //   <h1>Phonebook</h1>
-
-    //   <ContactForm />
-    //   <SearchBox />
-    //   {loading && <p>LOADING.....</p>}
-    //   {error !== null && <p>{error}</p>}
-    //   {items.length > 0 && <ContactList />}
-    // </div>
+  return isRefreshing ? (
+    <b>Refreshing user...</b>
+  ) : (
+    <>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route
+            path="/register"
+            element={<RestrictedRoute redirectTo="/contacts" component={<RegisterPage />} />}
+          />
+          <Route
+            path="/login"
+            element={<RestrictedRoute redirectTo="/contacts" component={<LoginPage />} />}
+          />
+          <Route
+            path="/contacts"
+            element={<PrivateRoute redirectTo="/login" component={<ContactsPage />} />}
+          />
+        </Route>
+      </Routes>
+    </>
   );
-}
+};
 
 export default App;
